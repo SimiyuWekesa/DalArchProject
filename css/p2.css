@@ -1,0 +1,75 @@
+/*
+      Author : Annette Maria Paul (A00439825)
+      Author : Emmanuel Siyimu (A00439371)
+      Author : Srna Bojchin (A00434222)
+    
+      It is ordered starting with HTML elements, followed by classes and id's
+
+      Links to HTML file p1
+*/
+/* jQuery Mobile classes             */
+/* Background colour                 */
+.ui-page,
+.ui-header {
+  background: #cedbce !important;
+}
+
+/* hide the default slider text box  */
+.ui-slider-input {
+  display: none !important;
+}
+
+.ui-btn {
+  font-size: 1em;
+  line-height: 1.3;
+  font-family: sans-serif /*{global-font-family}*/;
+}
+
+#logo {
+  align-items: center;
+  margin: auto;
+  width: 70%;
+}
+
+.greyClass {
+  color: rgb(201, 195, 235);
+}
+
+.blueClass {
+  color: rgb(30, 32, 194);
+}
+
+/* user defined id's                 */
+#thickDiv,
+#opqThermal,
+#doorThermal,
+#windowThermal,
+#windowArea,
+#ovrThermal {
+  width: 50px;
+  margin: 0px 50px;
+}
+
+/* user defined id's                 */
+#energy {
+  width: 75px;
+  margin: 0px 50px;
+}
+
+#logo {
+  margin: auto;
+  width: 90%;
+}
+
+#ship {
+  margin: auto;
+  width: 75%;
+}
+
+.sideA,
+.sideB,
+.sideC {
+  margin: auto;
+  width: 80%;
+  align-items: center;
+}

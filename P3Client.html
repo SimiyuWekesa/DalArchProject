@@ -1,0 +1,391 @@
+<!--
+  Author: Emmanuel Simiyu(A00439371)
+  Author: Annette Maria Paul(A00439825)
+  Author: Srna Bojchin(A00434222)
+
+  This file is the structure of a project that is intended to show different aspects
+  that come into building of a container as a cheap residence option. It loads the
+  logo, a picture of the container, and a menu for the different aspects to be
+  analysed. the only functional aspect is the insulation, which displays elevations for 
+  the plan and end of the container. It also has menus and sliders for adjusting different 
+  factors related to the aspect, providing insight into the building of the containers.
+
+-->
+<!DOCTYPE html5>
+
+<html>
+  <head>
+    <title>P3Client</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="./css/p2.min.css" />
+    <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="./css/p2.css" />
+
+    <script src="./scripts/jquery-1.11.1.min.js"></script>
+    <script src="./scripts/jquery.mobile-1.4.5.min.js"></script>
+    <script src="./scripts/P3Client.js"></script>
+  </head>
+
+  <body onload="setup()">
+    <div data-role="page">
+      <div role="main" class="ui-content">
+        <div class="ui-grid-c ui-responsive">
+          <div class="ui-block-a">
+            <div class="sideA">
+              <!---logo--->
+              <div id="logo">
+                <img src="logo.png" alt="Project XS" width="317" height="179" />
+              </div>
+            </div>
+          </div>
+          <div class="ui-block-b">
+            <div class="sideB">
+              <!--image of the container-->
+              <div id="ship">
+                <img src="shipCrate.jpg" alt="A2" width="260" height="194" />
+              </div>
+            </div>
+          </div>
+          <div class="ui-block-c">
+            <div class="sideC">
+              <br />
+              <!--menu of the aspects-->
+              <select id="menu" onchange="choices()">
+                <option class="blueClass" value="view">VIEW CHAPTERS</option>
+                <option class="greyClass" value="op1">
+                  Ventilation and Drafts
+                </option>
+                <option class="blueClass" value="op2">Insulation</option>
+                <option class="greyClass" value="op3">
+                  Size and Proportion
+                </option>
+                <option class="greyClass" value="op4">Immediate Context</option>
+                <option class="greyClass" value="op5">
+                  Construction Details
+                </option>
+                <option class="greyClass" value="op6">Energy Sources</option>
+                <option class="greyClass" value="op7">
+                  Refrigeration Cycle
+                </option>
+                <option class="greyClass" value="op8">Psychometrics</option>
+                <option class="greyClass" value="op9">
+                  Environmental Impacts
+                </option>
+                <option class="greyClass" value="op10">
+                  Radiation and Glazing
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="ui-block-d">
+            <!--empty block-->
+          </div>
+        </div>
+        <br />
+
+        <div id="2ndGrid">
+          <div class="ui-grid-c ui-responsive">
+            <div class="ui-block-a">
+              <div class="sideA">
+                <!--plan elevation-->
+                <canvas id="drawPlan" width="321" height="178"></canvas>
+              </div>
+            </div>
+            <div class="ui-block-b">
+              <!--empty block-->
+            </div>
+            <div class="ui-block-c">
+              <div class="sideC">
+                <!--end elevation-->
+                <canvas id="drawElevation" width="321" height="154"></canvas>
+              </div>
+            </div>
+            <div class="ui-block-d">
+              <!--empty block-->
+            </div>
+          </div>
+
+          <br />
+          <div class="ui-grid-c ui-responsive">
+            <div class="ui-block-a">
+              <div class="sideA">
+                <!--locations-->
+                <select id="places" onchange="processInput()" data-theme="c">
+                  <option value="places">PLACES WITH DEGREE DAYS</option>
+                  <option value="NV A 13030">NV Alert - 13030</option>
+                  <option value="NV I 9980">NV Iqaluit - 9980</option>
+                  <option value="NV R 9000">NV Resolution Island - 9000</option>
+                  <option value="NW Y 8170">NW Yellowknife - 8170</option>
+                  <option value="ON A 7100">ON Attawapiskat - 7100</option>
+                  <option value="MB F 6400">MB FlinFlon - 6440</option>
+                  <option value="QC N 6050">QC Noranda - 6050</option>
+                  <option value="MB W 5670">MB Winnipeg - 5670</option>
+                  <option value="NB C 5500">NB Campbellton - 5500</option>
+                  <option value="AL C 5000">AL Calgary - 5000</option>
+                  <option value="NL S 4800">NL St.Johns - 4800</option>
+                  <option value="NB F 4670">NB Fredricton - 4670</option>
+                  <option value="ON O 4520">ON Ottawa - 4520</option>
+                  <option value="PE C 4460">PE Charlottetown - 4460</option>
+                  <option value="QC M 4300">QC Montreal Centre - 4300</option>
+                  <option value="NS H 4000">NS Halifax - 4000</option>
+                  <option value="ON T 3500">ON Toronto CH - 3500</option>
+                  <option value="ON W 3400">ON Windsor - 3400</option>
+                  <option value="BC N 3000">BC Nanaimo - 3000</option>
+                  <option value="BC V 2900">BC Vancouver - 2900</option>
+                  <option value="BC W 2620">BC White ROck - 2620</option>
+                </select>
+              </div>
+            </div>
+            <div class="ui-block-b">
+              <div class="sideB">
+                <!--Diffeent insulation materials-->
+                <select id="insType" onchange="processInput()" data-theme="c">
+                  <option value="start">
+                    OPAQUE CONSTRUCTION WITH R or R/INCH
+                  </option>
+                  <option value="0">Bare Container (R1)</option>
+                  <option value="0">Plus Interior Finish,Unsulated (R2)</option>
+                  <option value="3">Plus Finish and Cellulose (R3/in)</option>
+                  <option value="3">Plus Finish and Fiberglass (R3/in)</option>
+                  <option value="6">Plus Finish and Spray Foam (R6/in)</option>
+                </select>
+              </div>
+            </div>
+            <div class="ui-block-c">
+              <div class="sideC">
+                <!--wall thickness-->
+                <table>
+                  <tr>
+                    <input
+                      id="thickSld"
+                      type="range"
+                      value="2"
+                      min="4"
+                      max="28"
+                      ui-slider-input="false"
+                      data-highlight="true"
+                      data-theme="c"
+                      data-track-theme="c"
+                    />
+                  </tr>
+                  <tr>
+                    <td>
+                      <div id="thickDiv">
+                        <input id="thickOut" type="text" />
+                      </div>
+                    </td>
+                    <td><label for="box">(") Opaque Thickness</label></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="ui-block-d">
+              <!--empty block-->
+            </div>
+          </div>
+
+          <br />
+          <div class="ui-grid-c ui-responsive">
+            <div class="ui-block-a">
+              <div class="sideA">
+                <!--wall thermal Resistance-->
+                <table>
+                  <tr>
+                    <td>
+                      <div id="opqThermal">
+                        <input id="opqOut" type="text" />
+                      </div>
+                    </td>
+                    <td>
+                      <label for="box">(R) Opaque Thermal Resistance</label>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="ui-block-b">
+              <div class="sideB">
+                <!--door thermal resistance-->
+                <table>
+                  <tr>
+                    <input
+                      id="doorSld"
+                      type="range"
+                      value="2"
+                      min="2"
+                      max="12"
+                      data-highlight="true"
+                      data-theme="c"
+                      data-track-theme="c"
+                    />
+                  </tr>
+                  <tr>
+                    <td>
+                      <div id="doorThermal">
+                        <input id="doorOut" type="text" />
+                      </div>
+                    </td>
+                    <td>
+                      <label for="box">(R) Door Thermal Resistance</label>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="ui-block-c">
+              <div class="sideC">
+                <!--window thermal resistance-->
+                <table>
+                  <tr>
+                    <input
+                      id="windowSld"
+                      type="range"
+                      value="1"
+                      min="1"
+                      max="10"
+                      data-highlight="true"
+                      data-theme="c"
+                      data-track-theme="c"
+                    />
+                  </tr>
+                  <tr>
+                    <td>
+                      <div id="windowThermal">
+                        <input id="windowOut" type="text" />
+                      </div>
+                    </td>
+                    <td>
+                      <label for="box">(R) Window Thermal Resistance</label>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="ui-block-d">
+              <!--empty block-->
+            </div>
+          </div>
+
+          <br />
+          <div class="ui-grid-c ui-responsive">
+            <div class="ui-block-a">
+              <div class="sideA">
+                <!--window Area-->
+                <table>
+                  <tr>
+                    <input
+                      id="windowAreaSld"
+                      type="range"
+                      value="0"
+                      min="0"
+                      max="108"
+                      data-highlight="true"
+                      data-theme="c"
+                      data-track-theme="c"
+                    />
+                  </tr>
+                  <tr>
+                    <td>
+                      <div id="windowArea">
+                        <input id="windowAOut" type="text" />
+                      </div>
+                    </td>
+                    <td><label for="box">(SQ FT) Window Area</label></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="ui-block-b">
+              <div class="sideB">
+                <!--overall thermal resistance-->
+                <table>
+                  <tr>
+                    <td>
+                      <div id="ovrThermal">
+                        <input id="ovrOut" type="text" />
+                      </div>
+                    </td>
+                    <td>
+                      <label for="box"
+                        >(R) Effective Overall Thermal Resistance</label
+                      >
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="ui-block-c">
+              <div class="sideC">
+                <!--annual energy-->
+                <table>
+                  <tr>
+                    <td>
+                      <div id="energy">
+                        <input id="energyOut" type="text" />
+                      </div>
+                    </td>
+                    <td><label for="box">(kWh) Annual Energy</label></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="ui-block-d">
+              <!--empty block-->
+            </div>
+          </div>
+
+          <br />
+          <div class="ui-grid-c ui-responsive">
+            <div class="ui-block-a">
+              <div class="sideA">
+                <!--graphs-->
+                <select id="graphs" data-mini="true">
+                  <option value="headerG">GRAPHS</option>
+                  <option class="greyClass" value="g1">Graph 1</option>
+                  <option class="greyClass" value="g2">Graph 2</option>
+                </select>
+              </div>
+            </div>
+            <div class="ui-block-b">
+              <div class="sideB">
+                <!--readouts-->
+                <select id="readouts" data-mini="true">
+                  <option value="headerR">READOUTS</option>
+                  <option class="greyClass" value="read1">
+                    Net to Gross Floor Area
+                  </option>
+                  <option class="greyClass" value="read2">
+                    Energy Bill Per Net Floor Area
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="ui-block-c">
+              <div class="sideC">
+                <!--concepts-->
+                <select
+                  id="textChange"
+                  data-mini="true"
+                  onchange="showConcepts()"
+                >
+                  <option value="6">CONCEPTS</option>
+                  <option value="0">Local Conditions</option>
+                  <option value="1">Annual Energy Budget</option>
+                  <option value="2">Drafts and Ventilation</option>
+                  <option value="3">Insulation and Heat Loss</option>
+                  <option value="4">Materials and Insulation</option>
+                  <option value="5">Environmental Impact</option>
+                </select>
+              </div>
+            </div>
+            <div class="ui-block-d">
+              <!--empty block-->
+            </div>
+          </div>
+          <div id="showText"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
